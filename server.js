@@ -17,7 +17,7 @@ app.post("/summarize", async (req, res) => {
   const text = req.body.text_to_summarize;
 
   // call your summarizeText function, passing in the text from the request
-  summarizeText(text)
+  summarizeText(text, req?.body?.min_length)
     .then((response) => {
       res.send(response); // Send the summary text as a response
     })
