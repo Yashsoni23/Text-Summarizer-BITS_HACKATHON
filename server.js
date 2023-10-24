@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 const summarizeText = require("./summarize.js");
 const Article = require("./models/article.js"); // Ensure the path to the Article model is correct
+const Message = require("./models/message.js");
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
@@ -40,6 +41,27 @@ app.get("/blogs", async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
+    res.send({
+      success: false,
+      data: "something went wrong " + error.message,
+    });
+  }
+});
+
+app.post("/message", async (req, res) => {
+  try {
+    const message = await Message.create({
+      name: req.body.name,
+      email: req.body.email,
+      message: req.body.message,
+    });
+    res.send({ success: true, data: message });
+  } catch (error) {
+    console.log(error.message);
+    res.send({
+      success: false,
+      data: "something went wrong at message sending time " + error.message,
+    });
   }
 });
 
