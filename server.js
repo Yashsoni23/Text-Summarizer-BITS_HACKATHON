@@ -21,7 +21,9 @@ app.post("/summarize", async (req, res) => {
 
   summarizeText(text, req?.body?.min_length)
     .then((response) => {
-      res.send(response);
+      res.json({
+        status:true,
+        result:response});
     })
     .catch((error) => {
       console.log(error.message);
